@@ -1,0 +1,62 @@
+*{
+    padding: 0px;
+    margin: 10px;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body{
+   background-image: url(../images/fondo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+form{
+    width: 33%;
+    padding: 15px 35px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    border-radius: 20px;
+    top: 40px;
+    left: 420px; 
+    /*La transicion va despues del codigo JS*/
+    transition: left 300ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+main{
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+
+input{
+    width: 90%;
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background: #F2F2F2;
+    font-size: 16px;
+    outline: none;
+    border-radius: 9px;
+}
+
+textarea{
+    width: 90%;
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background: #F2F2F2;
+    font-size: 16px;
+    outline: none;
+    border-radius: 9px;
+}
+h1{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+}

@@ -1,0 +1,24 @@
+.puertas{
+    width: 350px;
+	height: 480px;
+    border-radius: 10%;
+}
+
+
+.orden{
+    display: flex;
+    background: #E0E4E5;
+    padding: 60px;
+}
+
+.letra{
+    font-size: 20px;
+    color: #3f3f3f;
+    font-family: 'Inter', sans-serif;
+}
+
+.subtitulo{
+    color: #a38a18;
+    font-size: 35px;
+    font-family: 'Inter', sans-serif;
+}

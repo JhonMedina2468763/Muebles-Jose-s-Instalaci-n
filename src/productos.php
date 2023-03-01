@@ -1,0 +1,142 @@
+<?php 
+session_start();
+
+// Verificar si la variable de sesión está definida
+if (!isset($_SESSION['active'])) {
+    // Si no existe, redirigir al usuario a la página de inicio de sesión
+    header('Location: index.php');
+    exit();
+}
+
+include_once "includes/header.php";
+    include "conexion.php";
+    if (!empty($_POST)) {
+		$categoria = $_POST['Categoria'];
+        $producto = $_POST['producto'];
+        $precio = $_POST['precio'];
+        $cantidad = $_POST['cantidad'];
+        $alert = "";
+        if (empty($categoria) || empty($producto) || empty($precio) || $precio <  0 || empty($cantidad) || $cantidad < 0) {
+            $alert = '<div class="alert alert-danger" role="alert">
+                Todo los campos son obligatorios
+              </div>';
+        } else {
+            $query = mysqli_query($conexion, "SELECT * FROM producto WHERE Categoria = '$categoria'");
+            $result = mysqli_fetch_array($query);
+            if ($result > 0) {
+                $alert = '<div class="alert alert-warning" role="alert">
+                        La categoria ya existe
+                    </div>';
+            } else {
+				$query_insert = mysqli_query($conexion,"INSERT INTO producto(Categoria,descripcion,precio,existencia) values ('$categoria', '$producto','$precio','$cantidad')");
+                if ($query_insert) {
+                    $alert = '<div class="alert alert-success" role="alert">
+                Producto Registrado
+              </div>';
+                } else {
+                    $alert = '<div class="alert alert-danger" role="alert">
+                Error al registrar el producto
+              </div>';
+                }
+            }
+        }
+    }
+    ?>
+ <button class="btn btn-warning mb-2" type="button" data-toggle="modal" data-target="#nuevo_producto"><i class="fas fa-plus"></i></button>
+ <?php echo isset($alert) ? $alert : ''; ?>
+ <div class="table-responsive">
+     <table class="table table-striped table-bordered" id="tbl">
+         <thead class="thead-dark">
+             <tr>
+                 <th>#</th>
+                 <th>Categoria</th>
+                 <th>Producto</th>
+                 <th>Precio</th>
+                 <th>Stock</th>
+                 <th>Estado</th>
+                 <th></th>
+             </tr>
+         </thead>
+         <tbody>
+             <?php
+                include "conexion.php";
+
+                $query = mysqli_query($conexion, "SELECT * FROM producto");
+                $result = mysqli_num_rows($query);
+                if ($result > 0) {
+                    while ($data = mysqli_fetch_assoc($query)) {
+                        if ($data['estado'] == 1) {
+                            $estado = '<span class="badge badge-pill badge-success">Activo</span>';
+                        } else {
+                            $estado = '<span class="badge badge-pill badge-danger">Inactivo</span>';
+                        }
+                ?>
+                     <tr>
+                         <td><?php echo $data['codproducto']; ?></td>
+                         <td><?php echo $data['Categoria']; ?></td>
+                         <td><?php echo $data['descripcion']; ?></td>
+                         <td><?php echo $data['precio']; ?></td>
+                         <td><?php echo $data['existencia']; ?></td>
+                         <td><?php echo $estado ?></td>
+                         <td>
+                             <?php if ($data['estado'] == 1) { ?>
+                                 <a href="agregar_producto.php?id=<?php echo $data['codproducto']; ?>" class="btn btn-warning"><i class='fas fa-audio-description'></i></a>
+
+                                 <a href="editar_producto.php?id=<?php echo $data['codproducto']; ?>" class="btn btn-success"><i class='fas fa-edit'></i></a>
+
+                                 <form action="eliminar_producto.php?id=<?php echo $data['codproducto']; ?>" method="post" class="confirmar d-inline">
+                                     <button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
+                                     <a href="../reportes/pdf/pro.php?cl=<?php echo $row['id_usuario'] ?>&v=<?php echo $row['id'] ?>" target="_blank" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+                                <a href="../reportes/excel/excelpro.php?cl=<?php echo $row['id_usuario'] ?>&v=<?php echo $row['id'] ?>" target="_blank" class="btn btn-success"><i class="fas fa-file-excel"></i></a>
+                                
+                                 </form>
+                                 
+                             <?php } ?>
+                         </td>
+                     </tr>
+             <?php }
+                } ?>
+         </tbody>
+
+     </table>
+ </div>
+ <div id="nuevo_producto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header bg-warning text-black">
+                 <h5 class="modal-title" id="my-modal-title">Nuevo Producto</h5>
+                 <button class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body">
+                 <form action="" method="post" autocomplete="off">
+                     <?php echo isset($alert) ? $alert : ''; ?>
+                     <div class="form-group">
+                         <label for="Categoria"></label>
+                         <input type="text" placeholder="Ingrese Categoria" name="Categoria" id="Categoria" class="form-control">
+                     </div>
+                     <div class="form-group">
+                         <label for="producto">Producto</label>
+                         <input type="text" placeholder="Ingrese nombre del producto" name="producto" id="producto" class="form-control">
+                     </div>
+                     <div class="form-group">
+                         <label for="precio">Precio</label>
+                         <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio">
+                     </div>
+                     <div class="form-group">
+                         <label for="cantidad">Cantidad</label>
+                         <input type="number" placeholder="Ingrese cantidad" class="form-control" name="cantidad" id="cantidad">
+                     </div>
+                     <input type="submit" value="Guardar Producto" class="btn btn-warning">
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <?php include_once "includes/footer.php"; ?>
+
+
+
+
