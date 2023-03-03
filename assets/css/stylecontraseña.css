@@ -1,0 +1,106 @@
+/* Estilos base para todos los dispositivos */
+
+body {
+	background-color: #f4fffd;
+	background-image: url(../images/fondo.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+form {
+	background-color: #f1ebcf;
+	border-radius: 10px;
+	box-shadow: 0px 0px 20px #645e54;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+h1 {
+	color: #170312;
+	font-size: 36px;
+	margin-bottom: 30px;
+}
+
+label {
+	color: #170312;
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+input[type="password"] {
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+input[type="submit"] {
+	background-color: #170312;
+	color: #f4fffd;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #ffffff;
+	color: #170312;
+}
+
+.back-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+}
+
+.back-button a {
+	background-color: #170312;
+	color: #f4fffd;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.btn-container a:hover {
+	background-color: #fffefd;
+	color: #170312;
+}
+
+/* Estilos para dispositivos móviles con ancho de pantalla menor a 768px */
+
+@media screen and (max-width: 600px) {
+    .formulario {
+      max-width: 100%;
+    }
+    input,
+    textarea {
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 6px;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }

@@ -68,12 +68,17 @@ li a.active, li a:hover{
 #check{
     display: none;
 }
-
+@media (max-width: 768px) {
+	.logo {
+	display: none;
+	}
+	}
 @media (max-width: 952px){
     .enlace{
         padding-left: 20px;
     }
     }
+	
 
 @media (max-width: 390px){
     .checkbtn{
